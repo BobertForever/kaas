@@ -64,11 +64,6 @@ class KeymoteHTTPServer(BaseHTTPServer.HTTPServer):
 class RemoteHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def do_GET(self):
-
-        if not self.authenticate():
-            self.auth_fail()
-            return
-
         try:
             path = self.path.split('/')[1:]
             response, content_type, body = remote_handler.handle(path, STATE.show)
@@ -96,38 +91,6 @@ class RemoteHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.end_headers()
 
         print >> self.wfile, "Request was not authenticated when it should have been."
-
-
-    def authenticate(self):
-        ''' Verifies that a request is authenticated. To do this,
-        we provide two headers:
-        X-Kaas-Digest: the hmac-sha256 hex digest of the request
-        X-Kass-Nonce: a set of random characters to salt the hash.
-
-        A request is authenticated if and only if:
-        - The Digest has not been used to authenticate a request on
-        this server.
-        - The Digest is equivalent to the digest of:
-        self.command + '\n' + self.path + '\n' + X-Kaas-Nonce
-        (each encoded as ASCII)
-        '''
-
-        nonce = self.headers["X-Kaas-Nonce"]
-        request_digest = self.headers["X-Kaas-Digest"]
-
-        if request_digest in STATE.hashes:
-            return False
-
-        STATE.hashes.add(request_digest)
-
-        mac = hmac.new(KEY, digestmod = hashlib.sha256)
-        mac.update(self.command)
-        mac.update("\n")
-        mac.update(self.path)
-        mac.update("\n")
-        mac.update(nonce)
-
-        return mac.hexdigest() == request_digest 
 
 def create_server():
     #socket.error: [Errno 48] Address already in use
