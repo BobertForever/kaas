@@ -35,7 +35,7 @@ COMMANDS["5.0"] = {
 }
 
 COMMANDS["6.0"] = {
-    'export_classic' : 'export front document to POSIX file "%s" as Classic',
+    'export_classic' : 'export front document to POSIX file "%s" as Keynote 09',
     'export_slide_show' : 'export front document to POSIX file "%s" as HTML with properties {rawKPF : true}',
     'get_current_slide' : 'slide number of current slide of front slideshow', 
     'go_to_slide' : 'show slide %d of front slideshow',

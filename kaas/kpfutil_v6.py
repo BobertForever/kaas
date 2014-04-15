@@ -187,8 +187,10 @@ class TextureV6(kpfutil.Texture):
         self.asset = asset
 
     def path(self):
-        return os.path.join(self.kpf_v6.kpfdir, self.slide_path, self.asset)
-
+        if "global" not in self.asset:
+            return os.path.join(self.kpf_v6.kpfdir, self.slide_path, self.asset)
+        else:
+            return os.path.join(self.kpf_v6.kpfdir, self.asset)
 
 point = namedtuple("point", ["x", "y"])
 
