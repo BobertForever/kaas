@@ -102,8 +102,6 @@ class Handlers(object):
         self.show.pause()
         return self.current_state(path)
 
-
-
     def sync(self, path):
         ''' Syncs the server and the keynote slideshow, returns the current state '''
 
@@ -119,5 +117,3 @@ class Handlers(object):
         }
 
         return out
-
-
