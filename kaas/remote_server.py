@@ -95,7 +95,7 @@ class RemoteHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 def create_server():
     #socket.error: [Errno 48] Address already in use
     port = 8000
-    ip = socket.gethostbyname(socket.gethostname())
+    ip = socket.gethostbyname(socket.gethostname() + ".local")
     while True:
         try:
             STATE.server = KeymoteHTTPServer(('', port), RemoteHTTPRequestHandler)
