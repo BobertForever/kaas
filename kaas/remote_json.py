@@ -62,12 +62,18 @@ class Handlers(object):
     def notes(self, path):
         ''' Returns notes for specific slide, or every slide if not specified '''
         if len(path) >= 3 and path[2].strip() != "":
-            return self.show.notes(int(path[2]))
+            note = {}
+            note['slide'] = int(path[2])
+            note['content'] = self.show.notes(int(path[2]))
+            return note
         else:
-            notes = {}
+            notes = []
             for i in xrange(1, self.show.slide_count + 1):
-                notes[i] = self.show.notes(i)
-            return notes
+                note = {}
+                note['slide'] = i;
+                note['content'] = self.show.notes(i);
+                notes.append(note)
+            return { 'notes': notes }
 
 
     ''' Commands for remote-controlling keynote itself '''
