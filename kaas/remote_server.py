@@ -53,10 +53,8 @@ class ServerState(object):
     def __init__(self):
         self.show = None # No show until one is generated.
         self.server = None # No server yet.
-        self.hashes = set()
 
 STATE = ServerState()
-KEY = ""
 
 class KeymoteHTTPServer(BaseHTTPServer.HTTPServer):
     pass
@@ -126,19 +124,6 @@ def set_show():
 def get_show():
     return STATE.show
 
-def generate_key():
-    ''' Generates a random PIN number to authenticate
-    requests with. A PIN is a 6-digit number with at least
-    3 unique digits. '''
-
-    global KEY
-
-    k = ""
-    while len(set(k)) < 3:
-        k = str(random.randint(100000, 999999))
-
-    KEY = k
-    return k
 
 def prepare_show():
     if STATE.show is not None:
@@ -162,11 +147,9 @@ def main():
     set_show()
     print >> sys.stderr, "Generating build previews..."
     prepare_show()
-    generate_key()
     print >> sys.stderr, "Starting server..."
     address = start_serving()
     print >> sys.stderr, "Now serving on: http://%s:%d" % (address)
-    print >> sys.stderr, "The PIN number is: %s" % (KEY)
 
     try:
         while True:

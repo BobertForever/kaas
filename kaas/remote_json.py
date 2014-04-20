@@ -111,9 +111,14 @@ class Handlers(object):
     ''' Method for interrogating the state of Keynote itself '''
 
     def monitor(self, path):
+        is_playing = self.show.keynote_is_playing()
+        current_slide = None
+        if is_playing:
+            current_slide = self.show.keynote_current_slide()
+
         out = { 
-            "current_slide" : self.show.keynote_current_slide(),
-            "is_playing" : self.show.keynote_is_playing(),
+            "current_slide" : current_slide,
+            "is_playing" : is_playing
         }
 
         return out

@@ -182,9 +182,6 @@ class Slideshow(object):
         self.current_slide = self.slide_for_build(self.current_build)
 
 
-
-
-
 def generate():
     ''' Asks keynote to export a KPF of the current slide show. 
     If so, we'll generate a Slideshow() and return it.'''
@@ -200,34 +197,3 @@ def generate():
     else:
         # FAIL.
         return None
-
-
-''' Demo script '''
-if __name__ == "__main__":
-    print >> sys.stderr, "Exporting slideshow: "
-    slideshow = generate()
-
-    if slideshow == None:
-        print >> sys.stderr, "Failed to generate slideshow"
-        sys.exit(1)
-
-    print >> sys.stderr, "Preparing builds: "
-    slideshow.prepare()
-
-    #slideshow.start_slide_show()
-    #slideshow.next()
-    #slideshow.next()
-    #slideshow.next()
-    #slideshow.previous()
-    #slideshow.next()
-
-    print slideshow.current_slide
-    print slideshow.current_build
-    print slideshow.build_preview(slideshow.current_build)
-
-
-
-
-    raw_input("press enter to proceed")
-
-    slideshow.obliterate()
